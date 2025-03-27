@@ -9,14 +9,9 @@
 
 <hr>
 
-DPO的损失函数可以做如下恒等变换，可以发现框中的结果是一个可以预计算的常数。因此，在使用DPO进行优化时，我们完全可以离线计算常数部分，在线只需要加载$p_\theta$进行训练，这样和sft的训练相差无几。
+DPO的损失函数可以做如下恒等变换，可以发现蓝色框中的结果是一个可以预计算的常数。因此，在使用DPO进行优化时，我们完全可以离线计算常数部分，在线只需要加载$p_\theta$进行训练，这样和sft的训练相差无几。
 
-$$
-\begin{align*}
-\mathcal{L}_{DPO}(p_{\theta}; p_{ref}) &= -\mathbb{E}_{(x,y_w,y_l)\sim D} \left[\log \sigma \left(\beta \log \frac{p_{\theta}(y_w|x)}{p_{ref}(y_w|x)} - \beta \log \frac{p_{\theta}(y_l|x)}{p_{ref}(y_l|x)}\right)\right]\\
-&= -\mathbb{E}_{(x,y_w,y_l)\sim D} \left[\log \sigma \left(\beta \log \frac{p_{\theta}(y_w|x)}{p_{\theta}(y_l|x)} - \boxed{\beta \log \frac{p_{ref}(y_w|x)}{p_{ref}(y_l|x)}}\right)\right]
-\end{align*}
-$$
+<img src="docs/img.png">
 
 根据此思路，我们可以在[OpenSFT](https://github.com/mlpod/OpenSFT/tree/main)上进行二次开发。 涉及到的点主要是ref_model的离线log_prob的推理和在线损失的计算。
 
