@@ -33,6 +33,14 @@ pip install -r requirements.txt
 
 详见https://github.com/mlpod/OpenSFT/tree/main
 
+如何标注chosen、rejected？
+
+有4种方式可以选：
+1. 人工标注；
+2. 规则；
+3. reward model；
+4. 业界top模型打GSB或给定参考答案进行打分；
+
 数据处理代码放在了data目录中。data目录中的raw目录是存放未预处理的文件，数据格式如下：
 ```json
 {
